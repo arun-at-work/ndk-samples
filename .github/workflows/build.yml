@@ -10,6 +10,7 @@ jobs:
     steps:
     - name: check/change algo
       run: |
+        lsmod | grep tcp_
         sysctl net.ipv4.tcp_available_congestion_control
         sysctl net.ipv4.tcp_congestion_control
         sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
