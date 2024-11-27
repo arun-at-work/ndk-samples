@@ -8,6 +8,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: check/change algo
+      run: |
+        sysctl net.ipv4.tcp_congestion_control
+        sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
+        sysctl net.ipv4.tcp_congestion_control
+
     - uses: actions/checkout@v2
     - name: set up JDK 11
       uses: actions/setup-java@v1
