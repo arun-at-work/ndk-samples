@@ -8,20 +8,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: check/change algo
-      run: |
-        find /lib/modules/$(uname -r)/kernel/net/ipv4/ -type f -name 'tcp_*'
-        sysctl net.ipv4.tcp_available_congestion_control
-        sysctl net.ipv4.tcp_congestion_control
-        sudo sysctl -w net.ipv4.tcp_congestion_control=dctcp
-        sysctl net.ipv4.tcp_congestion_control
+    # - name: check/change algo
+    #   run: |
+    #     find /lib/modules/$(uname -r)/kernel/net/ipv4/ -type f -name 'tcp_*'
+    #     sysctl net.ipv4.tcp_available_congestion_control
+    #     sysctl net.ipv4.tcp_congestion_control
+    #     sudo sysctl -w net.ipv4.tcp_congestion_control=dctcp
+    #     sysctl net.ipv4.tcp_congestion_control
+    - name: Use BBR for checkout
+      run: | 
+        sudo sysctl -w net.ipv4.tcp_congestion_control=bbr   
 
     - uses: actions/checkout@v2
+
+    - name: Use Cubic for Next step
+      run: | 
+        sudo sysctl -w net.ipv4.tcp_congestion_control=cubic
+        
     - name: set up JDK 11
       uses: actions/setup-java@v1
       with:
         java-version: 17
-
+        
     - uses: pre-commit/action@v3.0.0
 
     - name: Setup Android SDK
