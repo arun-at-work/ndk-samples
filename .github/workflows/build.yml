@@ -17,13 +17,9 @@ jobs:
     #     sysctl net.ipv4.tcp_congestion_control
     - name: Use BBR for checkout
       run: | 
-        sudo sysctl -w net.ipv4.tcp_congestion_control=bbr   
+        sudo sysctl -w net.ipv4.tcp_congestion_control=highspeed  
 
     - uses: actions/checkout@v2
-
-    - name: Use Cubic for Next step
-      run: | 
-        sudo sysctl -w net.ipv4.tcp_congestion_control=cubic
         
     - name: set up JDK 11
       uses: actions/setup-java@v1
