@@ -17,7 +17,7 @@ jobs:
     #     sysctl net.ipv4.tcp_congestion_control
     - name: Use BBR for checkout
       run: | 
-        sudo sysctl -w net.ipv4.tcp_congestion_control=highspeed  
+        sudo sysctl -w net.ipv4.tcp_congestion_control=scalable  
 
     - uses: actions/checkout@v2
         
